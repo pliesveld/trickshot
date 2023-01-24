@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://brh0q3ga85c1x"]
+[gd_scene load_steps=14 format=3 uid="uid://brh0q3ga85c1x"]
 
 [ext_resource type="Texture2D" uid="uid://bw5of24w3c1wf" path="res://hattrick.jpg" id="1_ej1rx"]
 [ext_resource type="Script" path="res://game.gd" id="1_pknp7"]
@@ -14,6 +14,9 @@ distance = 3.0
 [sub_resource type="SphereMesh" id="SphereMesh_vmp14"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2jtym"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6jajp"]
 radius = 4.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_glnnq"]
@@ -33,6 +36,9 @@ texture = ExtResource("1_ej1rx")
 
 [node name="wall_top" type="StaticBody2D" parent="border"]
 rotation = 3.14159
+collision_layer = 3
+collision_mask = 3
+constant_linear_velocity = Vector2(0, 180)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="border/wall_top"]
 position = Vector2(0.0185852, -20.797)
@@ -40,6 +46,9 @@ build_mode = 1
 polygon = PackedVector2Array(-128.895, 36.8708, -109.394, 36.8708, -109.394, 84.102, 108.156, 84.1783, 108.784, 36.5661, 128.286, 36.5661, 127.658, 98.8047, -128.895, 98.7284)
 
 [node name="wall_bottom" type="StaticBody2D" parent="border"]
+collision_layer = 3
+collision_mask = 3
+constant_linear_velocity = Vector2(0, -180)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="border/wall_bottom"]
 build_mode = 1
@@ -48,6 +57,8 @@ polygon = PackedVector2Array(-128.305, 32.9857, -108.803, 32.9857, -108.803, 84.
 [node name="boundary" type="StaticBody2D" parent="border"]
 position = Vector2(95.9674, -16.0738)
 scale = Vector2(0.304717, 0.304717)
+collision_layer = 3
+collision_mask = 3
 
 [node name="left" type="CollisionShape2D" parent="border/boundary"]
 position = Vector2(-736, 77)
@@ -61,6 +72,7 @@ shape = SubResource("WorldBoundaryShape2D_1mjv7")
 
 [node name="puck" type="RigidBody2D" parent="."]
 position = Vector2(100, 0)
+mass = 0.17
 linear_damp = 1.2
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="puck"]
@@ -69,6 +81,14 @@ mesh = SubResource("SphereMesh_vmp14")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="puck"]
 shape = SubResource("CircleShape2D_2jtym")
+
+[node name="Area2D" type="Area2D" parent="puck"]
+collision_layer = 3
+collision_mask = 3
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="puck/Area2D"]
+shape = SubResource("CircleShape2D_6jajp")
 
 [node name="player" type="CharacterBody2D" parent="."]
 collision_layer = 2
@@ -84,23 +104,21 @@ position = Vector2(-16, 8)
 shape = SubResource("CircleShape2D_glnnq")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="player"]
-position = Vector2(100, 0)
+position = Vector2(10, -30)
 update_scale = false
 
 [node name="Area2D" type="Area2D" parent="player"]
-collision_layer = 2
-collision_mask = 2
-monitoring = false
 monitorable = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="player/Area2D"]
-position = Vector2(6, -26)
-polygon = PackedVector2Array(6, -4, 6, 7, -3.4, 7, -6, 3.4, -6, -7, 2, -7)
+position = Vector2(-24, 12)
+polygon = PackedVector2Array(36, -36, 20, 8, 4, 12, -4, 8, -8, -8, -4, -16, 24, -48)
 
 [node name="golie" type="CharacterBody2D" parent="."]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 3
+collision_mask = 3
 motion_mode = 1
+platform_on_leave = 2
 script = ExtResource("5_00bjy")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="golie"]
@@ -114,6 +132,8 @@ position = Vector2(736, 271)
 script = ExtResource("7_tkl7a")
 
 [node name="net" type="Area2D" parent="goal"]
+collision_layer = 2
+collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="goal/net"]
@@ -127,3 +147,5 @@ collision_mask = 2
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="goal/box"]
 position = Vector2(32, 81)
 shape = SubResource("RectangleShape2D_ngn2a")
+
+[connection signal="area_entered" from="player/Area2D" to="player" method="_on_area_2d_area_entered"]

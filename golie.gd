@@ -12,6 +12,9 @@ const goal_width = 50
 const speed = 300
 const MAX_SPEED = 1
 
+func _ready():
+	pass
+
 func _physics_process(delta):
 		var input_y = Input.get_action_strength("player1_down") - Input.get_action_strength("player1_up")
 		velocity.y += input_y * speed * delta
