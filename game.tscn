@@ -1,0 +1,129 @@
+[gd_scene load_steps=13 format=3 uid="uid://brh0q3ga85c1x"]
+
+[ext_resource type="Texture2D" uid="uid://bw5of24w3c1wf" path="res://hattrick.jpg" id="1_ej1rx"]
+[ext_resource type="Script" path="res://game.gd" id="1_pknp7"]
+[ext_resource type="Script" path="res://player.gd" id="3_i8juu"]
+[ext_resource type="Texture2D" uid="uid://botrjpkf22x6y" path="res://player.png" id="4_nbnu7"]
+[ext_resource type="Script" path="res://golie.gd" id="5_00bjy"]
+[ext_resource type="Texture2D" uid="uid://2wju4f7voc02" path="res://golie.png" id="5_dj6gi"]
+[ext_resource type="Script" path="res://goal.gd" id="7_tkl7a"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1mjv7"]
+distance = 3.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_vmp14"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2jtym"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_glnnq"]
+radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ngn2a"]
+size = Vector2(45, 160)
+
+[node name="Trickshot" type="Node2D"]
+script = ExtResource("1_pknp7")
+
+[node name="border" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.054902)
+position = Vector2(421.061, 323.75)
+scale = Vector2(3.28173, 3.28173)
+texture = ExtResource("1_ej1rx")
+
+[node name="wall_top" type="StaticBody2D" parent="border"]
+rotation = 3.14159
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="border/wall_top"]
+position = Vector2(0.0185852, -20.797)
+build_mode = 1
+polygon = PackedVector2Array(-128.895, 36.8708, -109.394, 36.8708, -109.394, 84.102, 108.156, 84.1783, 108.784, 36.5661, 128.286, 36.5661, 127.658, 98.8047, -128.895, 98.7284)
+
+[node name="wall_bottom" type="StaticBody2D" parent="border"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="border/wall_bottom"]
+build_mode = 1
+polygon = PackedVector2Array(-128.305, 32.9857, -108.803, 32.9857, -108.803, 84.1783, 108.156, 84.1783, 108.156, 32.9857, 127.658, 32.9857, 127.658, 98.8047, -128.305, 98.8047)
+
+[node name="boundary" type="StaticBody2D" parent="border"]
+position = Vector2(95.9674, -16.0738)
+scale = Vector2(0.304717, 0.304717)
+
+[node name="left" type="CollisionShape2D" parent="border/boundary"]
+position = Vector2(-736, 77)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_1mjv7")
+
+[node name="right" type="CollisionShape2D" parent="border/boundary"]
+position = Vector2(100, 89)
+rotation = 4.71239
+shape = SubResource("WorldBoundaryShape2D_1mjv7")
+
+[node name="puck" type="RigidBody2D" parent="."]
+position = Vector2(100, 0)
+linear_damp = 1.2
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="puck"]
+scale = Vector2(8, 7.991)
+mesh = SubResource("SphereMesh_vmp14")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="puck"]
+shape = SubResource("CircleShape2D_2jtym")
+
+[node name="player" type="CharacterBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("3_i8juu")
+
+[node name="Sprite2D" type="Sprite2D" parent="player"]
+texture = ExtResource("4_nbnu7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+position = Vector2(-16, 8)
+shape = SubResource("CircleShape2D_glnnq")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="player"]
+position = Vector2(100, 0)
+update_scale = false
+
+[node name="Area2D" type="Area2D" parent="player"]
+collision_layer = 2
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="player/Area2D"]
+position = Vector2(6, -26)
+polygon = PackedVector2Array(6, -4, 6, 7, -3.4, 7, -6, 3.4, -6, -7, 2, -7)
+
+[node name="golie" type="CharacterBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("5_00bjy")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="golie"]
+polygon = PackedVector2Array(1, -21, 5, -18, 5, 19, 3, 19, 0, 23, -19, 23, -19, 21, -23, 18, -23, -18, -19, -21, -19, -23, 1, -23)
+
+[node name="Sprite2D" type="Sprite2D" parent="golie"]
+texture = ExtResource("5_dj6gi")
+
+[node name="goal" type="Node2D" parent="."]
+position = Vector2(736, 271)
+script = ExtResource("7_tkl7a")
+
+[node name="net" type="Area2D" parent="goal"]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="goal/net"]
+position = Vector2(80, 81)
+shape = SubResource("RectangleShape2D_ngn2a")
+
+[node name="box" type="StaticBody2D" parent="goal"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="goal/box"]
+position = Vector2(32, 81)
+shape = SubResource("RectangleShape2D_ngn2a")
