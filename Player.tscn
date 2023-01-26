@@ -1,0 +1,441 @@
+[gd_scene load_steps=26 format=3 uid="uid://cxlrlby78c6s3"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_j6brk"]
+[ext_resource type="Texture2D" uid="uid://cem3aovb83k4i" path="res://assets/images/player.png" id="2_trs81"]
+
+[sub_resource type="Animation" id="Animation_0bojw"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_wnt3u"]
+resource_name = "shoot"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/StickBone2D:rotation")
+tracks/0/interp = 3
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5),
+"transitions": PackedFloat32Array(0.0272047, 0.164939, 1),
+"update": 0,
+"values": [-0.349066, 0.34383, -0.251327]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D:rotation")
+tracks/1/interp = 3
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [6.19941, 5.69501]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D/ArmLowerLeftBone2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.141372]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/ArmUpperRightBone2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.338594]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/ArmUpperRightBone2D/ArmLowerRightBone2D:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.05243]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/StickBone2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(0.241484),
+"update": 0,
+"values": [Vector2(16, -6)]
+}
+
+[sub_resource type="Animation" id="Animation_p31hd"]
+resource_name = "skate"
+length = 1.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D:rotation")
+tracks/0/interp = 3
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.3, 1),
+"transitions": PackedFloat32Array(1, 0.870551, 1),
+"update": 0,
+"values": [-0.546288, -0.71384, -0.546288]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D/ArmLowerLeftBone2D:rotation")
+tracks/1/interp = 3
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.6, 1),
+"transitions": PackedFloat32Array(1, 0.732043, 1),
+"update": 0,
+"values": [1.16937, 1.74184, 1.16937]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.6, 0.8771),
+"transitions": PackedFloat32Array(1, 1.41421, 1),
+"update": 0,
+"values": [-0.0698132, 0.0698132, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/ArmUpperRightBone2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 0.3, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.466003, 0.916298, 0.466003]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/ArmUpperRightBone2D/ArmLowerRightBone2D:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-1.65457, -2.06298, -1.65457]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/HeadBone2D:rotation")
+tracks/5/interp = 4
+tracks/5/loop_wrap = false
+tracks/5/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.7, 1),
+"transitions": PackedFloat32Array(1, 2, 2.37842, 1),
+"update": 0,
+"values": [0.0, -0.0436332, 0.0610865, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/LeftFootBone2D:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.1, 0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-4, -7), Vector2(-6, -7), Vector2(-4, -7)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/RightFootBone2D:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.5, 0.7, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-4, 5), Vector2(-6, 5), Vector2(-4, 5)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/StickBone2D:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.7, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 0.517634),
+"update": 0,
+"values": [Vector2(16, -6), Vector2(18.754, -4.5), Vector2(14.766, -3), Vector2(16, -6)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Sprite2D/Skeleton2D/BodyBone2D/StickBone2D:rotation")
+tracks/9/interp = 3
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.7, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 0.307786),
+"update": 0,
+"values": [-0.251327, -0.18326, 5.93063, -0.251327]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7j4xk"]
+_data = {
+"RESET": SubResource("Animation_0bojw"),
+"shoot": SubResource("Animation_wnt3u"),
+"skate": SubResource("Animation_p31hd")
+}
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_h4n6u"]
+filter_enabled = true
+filters = ["Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D/ArmLowerLeftBone2D:rotation", "Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D:rotation", "Sprite2D/Skeleton2D/BodyBone2D/ArmUpperRightBone2D/ArmLowerRightBone2D:rotation", "Sprite2D/Skeleton2D/BodyBone2D/ArmUpperRightBone2D:rotation", "Sprite2D/Skeleton2D/BodyBone2D/StickBone2D:position", "Sprite2D/Skeleton2D/BodyBone2D/StickBone2D:rotation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mwow8"]
+animation = &"shoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1eudb"]
+animation = &"skate"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_4nblr"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_etifq"]
+graph_offset = Vector2(28.8051, 155.908)
+nodes/output/position = Vector2(1213.33, 200)
+nodes/shoot/node = SubResource("AnimationNodeOneShot_h4n6u")
+nodes/shoot/position = Vector2(826.667, 360)
+nodes/shoot_animation/node = SubResource("AnimationNodeAnimation_mwow8")
+nodes/shoot_animation/position = Vector2(600, 493.333)
+nodes/skate_animation/node = SubResource("AnimationNodeAnimation_1eudb")
+nodes/skate_animation/position = Vector2(333.333, 226.667)
+nodes/skate_animation_timescale/node = SubResource("AnimationNodeTimeScale_4nblr")
+nodes/skate_animation_timescale/position = Vector2(546.667, 213.333)
+node_connections = [&"output", 0, &"shoot", &"shoot", 0, &"skate_animation_timescale", &"shoot", 1, &"shoot_animation", &"skate_animation_timescale", 0, &"skate_animation"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rikao"]
+load_path = "res://.godot/imported/test_player.png-0631b7ce4d7ec7f3180f67b13c84c019.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cuyi3"]
+atlas = SubResource("CompressedTexture2D_rikao")
+region = Rect2(0, 432, 216, 216)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v35jb"]
+load_path = "res://.godot/imported/test_player.png-0631b7ce4d7ec7f3180f67b13c84c019.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcvnl"]
+atlas = SubResource("CompressedTexture2D_v35jb")
+region = Rect2(432, 432, 216, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqnr3"]
+atlas = ExtResource("2_trs81")
+region = Rect2(0, 0, 216, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7s4pi"]
+atlas = ExtResource("2_trs81")
+region = Rect2(216, 0, 216, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsfhh"]
+atlas = ExtResource("2_trs81")
+region = Rect2(432, 0, 216, 216)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b1e2x"]
+load_path = "res://.godot/imported/test_player.png-0631b7ce4d7ec7f3180f67b13c84c019.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3kegu"]
+atlas = SubResource("CompressedTexture2D_b1e2x")
+region = Rect2(216, 216, 216, 216)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nsuna"]
+load_path = "res://.godot/imported/test_player.png-0631b7ce4d7ec7f3180f67b13c84c019.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84d3v"]
+atlas = SubResource("CompressedTexture2D_nsuna")
+region = Rect2(432, 216, 216, 216)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_40krj"]
+load_path = "res://.godot/imported/test_player.png-0631b7ce4d7ec7f3180f67b13c84c019.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wx6d"]
+atlas = SubResource("CompressedTexture2D_40krj")
+region = Rect2(0, 216, 216, 216)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pu26h"]
+radius = 30.0
+
+[node name="PlayerSkeleton" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_j6brk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7j4xk")
+}
+next/RESET = &"skate"
+next/shoot = &"skate"
+blend_times = [&"shoot", &"shoot", 1.0, &"shoot", &"skate", 2.0]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendTree_etifq")
+anim_player = NodePath("../AnimationPlayer")
+parameters/shoot/active = false
+parameters/skate_animation_timescale/scale = 1.0
+
+[node name="Sprite2D" type="Node2D" parent="."]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="Sprite2D"]
+
+[node name="BodyBone2D" type="Bone2D" parent="Sprite2D/Skeleton2D"]
+rotation = -0.0698132
+scale = Vector2(0.999999, 0.999999)
+rest = Transform2D(0, 0, 1, 0, 0, 0)
+editor_settings/show_bone_gizmo = false
+
+[node name="LeftFootBone2D" type="Bone2D" parent="Sprite2D/Skeleton2D/BodyBone2D"]
+position = Vector2(-4, -7)
+rest = Transform2D(0, 0, 0, 0, 1, 0)
+editor_settings/show_bone_gizmo = false
+
+[node name="LeftFoot" type="Sprite2D" parent="Sprite2D/Skeleton2D/BodyBone2D/LeftFootBone2D"]
+position = Vector2(-17, -17)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_cuyi3")
+centered = false
+
+[node name="RightFootBone2D" type="Bone2D" parent="Sprite2D/Skeleton2D/BodyBone2D"]
+position = Vector2(-4, 5)
+rest = Transform2D(0, 0, 0, 1, 0, 0)
+editor_settings/show_bone_gizmo = false
+
+[node name="RightFoot" type="Sprite2D" parent="Sprite2D/Skeleton2D/BodyBone2D/RightFootBone2D"]
+position = Vector2(-17, -17)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_cuyi3")
+centered = false
+
+[node name="StickBone2D" type="Bone2D" parent="Sprite2D/Skeleton2D/BodyBone2D"]
+position = Vector2(16, -6)
+rotation = 0.34383
+scale = Vector2(0.999999, 0.999999)
+rest = Transform2D(10, 0, 0, 0, 10, 0)
+editor_settings/show_bone_gizmo = false
+
+[node name="Stick" type="Sprite2D" parent="Sprite2D/Skeleton2D/BodyBone2D/StickBone2D"]
+position = Vector2(-24.3115, -39.6263)
+rotation = 0.242601
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_fcvnl")
+centered = false
+
+[node name="Body" type="Sprite2D" parent="Sprite2D/Skeleton2D/BodyBone2D"]
+position = Vector2(-12, -39)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_lqnr3")
+centered = false
+
+[node name="ArmUpperLeftBone2D" type="Bone2D" parent="Sprite2D/Skeleton2D/BodyBone2D"]
+position = Vector2(0, -12)
+rotation = -0.0837753
+rest = Transform2D(0, 1, 0, 0, 0, 0)
+editor_settings/show_bone_gizmo = false
+
+[node name="ArmUpperLeft" type="Sprite2D" parent="Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D"]
+position = Vector2(-7, -26)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_7s4pi")
+centered = false
+
+[node name="ArmLowerLeftBone2D" type="Bone2D" parent="Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D"]
+position = Vector2(12.4945, -0.941763)
+rotation = 0.141372
+scale = Vector2(0.999999, 0.999999)
+rest = Transform2D(1, 0, 0, 0, 0, 0)
+editor_settings/show_bone_gizmo = false
+
+[node name="ArmLowerLeft" type="Sprite2D" parent="Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D/ArmLowerLeftBone2D"]
+position = Vector2(-9.62706, -24.3376)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_rsfhh")
+centered = false
+
+[node name="ArmUpperRightBone2D" type="Bone2D" parent="Sprite2D/Skeleton2D/BodyBone2D"]
+position = Vector2(0, 12)
+rotation = -0.338594
+scale = Vector2(0.999999, 0.999999)
+rest = Transform2D(0, 1, 0, 0, 0, 0)
+editor_settings/show_bone_gizmo = false
+
+[node name="ArmUpperRight" type="Sprite2D" parent="Sprite2D/Skeleton2D/BodyBone2D/ArmUpperRightBone2D"]
+position = Vector2(-10.2324, -24.3372)
+rotation = -0.125664
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_3kegu")
+centered = false
+
+[node name="ArmLowerRightBone2D" type="Bone2D" parent="Sprite2D/Skeleton2D/BodyBone2D/ArmUpperRightBone2D"]
+position = Vector2(10.731, -0.919706)
+rotation = -1.05243
+rest = Transform2D(1, 0, 0, 0, 0, 0)
+editor_settings/show_bone_gizmo = false
+
+[node name="ArmLowerRight" type="Sprite2D" parent="Sprite2D/Skeleton2D/BodyBone2D/ArmUpperRightBone2D/ArmLowerRightBone2D"]
+position = Vector2(-9.62706, -24.3376)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_84d3v")
+centered = false
+
+[node name="HeadBone2D" type="Bone2D" parent="Sprite2D/Skeleton2D/BodyBone2D"]
+rest = Transform2D(1, 1, 0, 0, 0, 0)
+editor_settings/show_bone_gizmo = false
+
+[node name="Head" type="Sprite2D" parent="Sprite2D/Skeleton2D/BodyBone2D/HeadBone2D"]
+position = Vector2(-13, -41)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_4wx6d")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, -7)
+shape = SubResource("CircleShape2D_pu26h")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+position = Vector2(45, -31)
+update_rotation = false
+update_scale = false
+
+[node name="Area2D" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+position = Vector2(-3, 8)
+polygon = PackedVector2Array(51, -34, 34, 11, 4, 12, -4, 8, -8, -8, -10, -19, 27, -51)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

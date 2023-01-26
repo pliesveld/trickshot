@@ -1,15 +1,27 @@
-[gd_scene load_steps=14 format=3 uid="uid://brh0q3ga85c1x"]
+[gd_scene load_steps=20 format=3 uid="uid://brh0q3ga85c1x"]
 
 [ext_resource type="Texture2D" uid="uid://bw5of24w3c1wf" path="res://hattrick.jpg" id="1_ej1rx"]
 [ext_resource type="Script" path="res://game.gd" id="1_pknp7"]
-[ext_resource type="Script" path="res://player.gd" id="3_i8juu"]
-[ext_resource type="Texture2D" uid="uid://botrjpkf22x6y" path="res://player.png" id="4_nbnu7"]
+[ext_resource type="PackedScene" uid="uid://cxlrlby78c6s3" path="res://Player.tscn" id="3_5j7ts"]
 [ext_resource type="Script" path="res://golie.gd" id="5_00bjy"]
 [ext_resource type="Texture2D" uid="uid://2wju4f7voc02" path="res://golie.png" id="5_dj6gi"]
-[ext_resource type="Script" path="res://goal.gd" id="7_tkl7a"]
+[ext_resource type="PackedScene" path="res://Goal.tscn" id="8_cqw0d"]
+[ext_resource type="FontFile" uid="uid://dgvxek8eky7w6" path="res://assets/fonts/scoreboard.ttf" id="9_u7r14"]
+[ext_resource type="AudioStream" uid="uid://deus8ewb54app" path="res://assets/sounds/horn.mp3" id="10_3wuvb"]
+[ext_resource type="Texture2D" path="res://assets/images/referee.jpg" id="10_56k1v"]
+[ext_resource type="Script" path="res://score.gd" id="10_qh5ap"]
+[ext_resource type="Script" path="res://Referee.gd" id="11_bttac"]
+[ext_resource type="AudioStream" path="res://assets/sounds/whistle.wav" id="12_o314w"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1mjv7"]
-distance = 3.0
+distance = 0.000916037
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_eqxlx"]
+normal = Vector2(1, -1.13214e-06)
+distance = 160.527
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_knven"]
+blend_mode = 2
 
 [sub_resource type="SphereMesh" id="SphereMesh_vmp14"]
 
@@ -19,11 +31,11 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_6jajp"]
 radius = 4.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_glnnq"]
-radius = 16.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ngn2a"]
-size = Vector2(45, 160)
+[sub_resource type="LabelSettings" id="LabelSettings_si65t"]
+font = ExtResource("9_u7r14")
+font_size = 64
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Trickshot" type="Node2D"]
 script = ExtResource("1_pknp7")
@@ -42,7 +54,6 @@ constant_linear_velocity = Vector2(0, 180)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="border/wall_top"]
 position = Vector2(0.0185852, -20.797)
-build_mode = 1
 polygon = PackedVector2Array(-128.895, 36.8708, -109.394, 36.8708, -109.394, 84.102, 108.156, 84.1783, 108.784, 36.5661, 128.286, 36.5661, 127.658, 98.8047, -128.895, 98.7284)
 
 [node name="wall_bottom" type="StaticBody2D" parent="border"]
@@ -51,8 +62,18 @@ collision_mask = 3
 constant_linear_velocity = Vector2(0, -180)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="border/wall_bottom"]
-build_mode = 1
 polygon = PackedVector2Array(-128.305, 32.9857, -108.803, 32.9857, -108.803, 84.1783, 108.156, 84.1783, 108.156, 32.9857, 127.658, 32.9857, 127.658, 98.8047, -128.305, 98.8047)
+
+[node name="corners" type="Node2D" parent="border"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="border/corners"]
+collision_layer = 3
+collision_mask = 3
+constant_linear_velocity = Vector2(50, 50)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="border/corners/StaticBody2D"]
+position = Vector2(-99.0517, -59.6484)
+polygon = PackedVector2Array(28.034, -18.283, 28.034, -3.65661, 13.4076, -1.21887, 7.31321, 2.43774, -7.62939e-06, 8.53209, -4.87549, 15.8453, -9.75096, 28.034, -29.2529, 25.5963, -29.2529, -18.283)
 
 [node name="boundary" type="StaticBody2D" parent="border"]
 position = Vector2(95.9674, -16.0738)
@@ -65,13 +86,40 @@ position = Vector2(-736, 77)
 rotation = 1.5708
 shape = SubResource("WorldBoundaryShape2D_1mjv7")
 
+[node name="top" type="CollisionShape2D" parent="border/boundary"]
+position = Vector2(-320, -315)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_eqxlx")
+
+[node name="bottom" type="CollisionShape2D" parent="border/boundary"]
+position = Vector2(-316, 489)
+rotation = 4.71239
+shape = SubResource("WorldBoundaryShape2D_eqxlx")
+
 [node name="right" type="CollisionShape2D" parent="border/boundary"]
 position = Vector2(100, 89)
 rotation = 4.71239
 shape = SubResource("WorldBoundaryShape2D_1mjv7")
+metadata/Name = "right"
+
+[node name="Referee" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_knven")
+position = Vector2(420, 152)
+scale = Vector2(0.233333, 0.233333)
+texture = ExtResource("10_56k1v")
+script = ExtResource("11_bttac")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Referee"]
+position = Vector2(-0.00012207, 137.143)
+remote_path = NodePath("../../puck")
+update_rotation = false
+update_scale = false
+
+[node name="Player" parent="." instance=ExtResource("3_5j7ts")]
+position = Vector2(13, 0)
 
 [node name="puck" type="RigidBody2D" parent="."]
-position = Vector2(100, 0)
+position = Vector2(420, 184)
 mass = 0.17
 linear_damp = 1.2
 
@@ -90,62 +138,76 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="puck/Area2D"]
 shape = SubResource("CircleShape2D_6jajp")
 
-[node name="player" type="CharacterBody2D" parent="."]
-collision_layer = 2
-collision_mask = 2
-motion_mode = 1
-script = ExtResource("3_i8juu")
-
-[node name="Sprite2D" type="Sprite2D" parent="player"]
-texture = ExtResource("4_nbnu7")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
-position = Vector2(-16, 8)
-shape = SubResource("CircleShape2D_glnnq")
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="player"]
-position = Vector2(10, -30)
-update_scale = false
-
-[node name="Area2D" type="Area2D" parent="player"]
-monitorable = false
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="player/Area2D"]
-position = Vector2(-24, 12)
-polygon = PackedVector2Array(36, -36, 20, 8, 4, 12, -4, 8, -8, -8, -4, -16, 24, -48)
-
 [node name="golie" type="CharacterBody2D" parent="."]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 0
+collision_mask = 0
 motion_mode = 1
 platform_on_leave = 2
 script = ExtResource("5_00bjy")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="golie"]
-polygon = PackedVector2Array(1, -21, 5, -18, 5, 19, 3, 19, 0, 23, -19, 23, -19, 21, -23, 18, -23, -18, -19, -21, -19, -23, 1, -23)
-
 [node name="Sprite2D" type="Sprite2D" parent="golie"]
 texture = ExtResource("5_dj6gi")
 
-[node name="goal" type="Node2D" parent="."]
-position = Vector2(736, 271)
-script = ExtResource("7_tkl7a")
+[node name="StaticBody2D" type="StaticBody2D" parent="golie"]
+constant_linear_velocity = Vector2(200, 0)
 
-[node name="net" type="Area2D" parent="goal"]
-collision_layer = 2
-collision_mask = 2
-monitorable = false
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="golie/StaticBody2D"]
+polygon = PackedVector2Array(1, -21, 5, -18, 5, 19, 3, 19, 0, 23, -19, 23, -19, 21, -23, 18, -23, -18, -19, -21, -19, -23, 1, -23)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="goal/net"]
-position = Vector2(80, 81)
-shape = SubResource("RectangleShape2D_ngn2a")
+[node name="Goal" parent="." instance=ExtResource("8_cqw0d")]
 
-[node name="box" type="StaticBody2D" parent="goal"]
-collision_layer = 2
-collision_mask = 2
+[node name="Goal2" parent="." instance=ExtResource("8_cqw0d")]
+position = Vector2(104, 436)
+rotation = 3.14159
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="goal/box"]
-position = Vector2(32, 81)
-shape = SubResource("RectangleShape2D_ngn2a")
+[node name="CenterContainer" type="CenterContainer" parent="."]
+offset_right = 844.0
+offset_bottom = 75.0
 
-[connection signal="area_entered" from="player/Area2D" to="player" method="_on_area_2d_area_entered"]
+[node name="scoreboard" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 15
+
+[node name="score_left" type="Label" parent="CenterContainer/scoreboard"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_si65t")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("10_qh5ap")
+
+[node name="clock" type="Label" parent="CenterContainer/scoreboard"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+text = "1:00"
+label_settings = SubResource("LabelSettings_si65t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score_right" type="Label" parent="CenterContainer/scoreboard"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "0
+"
+label_settings = SubResource("LabelSettings_si65t")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("10_qh5ap")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+process_callback = 0
+
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("10_3wuvb")
+pitch_scale = 1.52
+
+[node name="AudioStart" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("12_o314w")

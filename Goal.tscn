@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfvalxvhuk5ge"]
+
+[ext_resource type="Script" path="res://goal.gd" id="1_0mxcq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ngn2a"]
+size = Vector2(45, 160)
+
+[node name="goal" type="Node2D"]
+position = Vector2(736, 271)
+script = ExtResource("1_0mxcq")
+
+[node name="net" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+monitorable = false
+metadata/name = "right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="net"]
+position = Vector2(76, 81)
+shape = SubResource("RectangleShape2D_ngn2a")
+metadata/Name = "right"
+
+[node name="box" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="box"]
+position = Vector2(32, 81)
+shape = SubResource("RectangleShape2D_ngn2a")
