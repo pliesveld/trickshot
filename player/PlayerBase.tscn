@@ -1,6 +1,6 @@
-[gd_scene load_steps=26 format=3 uid="uid://cxlrlby78c6s3"]
+[gd_scene load_steps=26 format=3 uid="uid://tvkhr45kwjp0"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_j6brk"]
+[ext_resource type="Script" path="res://player/PlayerBase.gd" id="1_4mf5x"]
 [ext_resource type="Texture2D" uid="uid://cem3aovb83k4i" path="res://assets/images/player.png" id="2_trs81"]
 
 [sub_resource type="Animation" id="Animation_0bojw"]
@@ -289,20 +289,19 @@ region = Rect2(0, 216, 216, 216)
 [sub_resource type="CircleShape2D" id="CircleShape2D_pu26h"]
 radius = 18.0
 
-[node name="PlayerSkeleton" type="CharacterBody2D"]
+[node name="PlayerBase" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 2
 motion_mode = 1
 platform_on_leave = 2
-script = ExtResource("1_j6brk")
+script = ExtResource("1_4mf5x")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_7j4xk")
 }
 next/RESET = &"skate"
-next/shoot = &"skate"
-blend_times = [&"shoot", &"skate", 2.0, &"shoot", &"shoot", 1.0]
+blend_times = [&"shoot", &"shoot", 1.0, &"shoot", &"skate", 2.0]
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_etifq")

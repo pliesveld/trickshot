@@ -1,19 +1,22 @@
-[gd_scene load_steps=22 format=3 uid="uid://brh0q3ga85c1x"]
+[gd_scene load_steps=26 format=3 uid="uid://carxpgt35sdst"]
 
 [ext_resource type="Texture2D" uid="uid://bw5of24w3c1wf" path="res://hattrick.jpg" id="1_ej1rx"]
 [ext_resource type="Script" path="res://game.gd" id="1_pknp7"]
-[ext_resource type="PackedScene" uid="uid://cxlrlby78c6s3" path="res://Player.tscn" id="3_5j7ts"]
 [ext_resource type="PhysicsMaterial" uid="uid://cc7pf7rspeetf" path="res://wall_physics.tres" id="3_80pb4"]
-[ext_resource type="Script" path="res://golie.gd" id="5_00bjy"]
-[ext_resource type="Texture2D" uid="uid://2wju4f7voc02" path="res://golie.png" id="5_dj6gi"]
 [ext_resource type="Script" path="res://Puck.gd" id="6_0ejv0"]
+[ext_resource type="PackedScene" uid="uid://c17ykim87pvd8" path="res://player/PlayerHuman.tscn" id="6_h74sl"]
+[ext_resource type="PackedScene" uid="uid://px1trtvpgpbe" path="res://player/PlayerComputer.tscn" id="6_o7pjn"]
 [ext_resource type="PackedScene" uid="uid://cfvalxvhuk5ge" path="res://Goal.tscn" id="8_cqw0d"]
+[ext_resource type="Script" path="res://goalie/Goalie.gd" id="9_lxqlk"]
 [ext_resource type="FontFile" uid="uid://dgvxek8eky7w6" path="res://assets/fonts/scoreboard.ttf" id="9_u7r14"]
 [ext_resource type="AudioStream" uid="uid://deus8ewb54app" path="res://assets/sounds/horn.mp3" id="10_3wuvb"]
+[ext_resource type="Texture2D" uid="uid://2wju4f7voc02" path="res://goalie/Goalie.png" id="10_5o8xv"]
 [ext_resource type="Texture2D" uid="uid://daf3sejlkgtpc" path="res://assets/images/referee.jpg" id="10_56k1v"]
 [ext_resource type="Script" path="res://score.gd" id="10_qh5ap"]
 [ext_resource type="Script" path="res://Referee.gd" id="11_bttac"]
+[ext_resource type="Script" path="res://goalie/GoalieComputer.gd" id="11_sbbbx"]
 [ext_resource type="AudioStream" uid="uid://ohvl3iwfd3qn" path="res://assets/sounds/whistle.wav" id="12_o314w"]
+[ext_resource type="AudioStream" uid="uid://bbflyj80umsbk" path="res://assets/sounds/buzzer.mp3" id="17_gls8q"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1mjv7"]
 distance = 0.000916037
@@ -24,6 +27,11 @@ distance = 160.527
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_knven"]
 blend_mode = 2
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_7d2g7"]
+vertices = PackedVector2Array(120, 128, 732, 128, 752, 584, 120, 592)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+outlines = [PackedVector2Array(120, 128, 732, 128, 752, 584, 120, 592)]
 
 [sub_resource type="SphereMesh" id="SphereMesh_vmp14"]
 
@@ -41,6 +49,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="Trickshot" type="Node2D"]
 script = ExtResource("1_pknp7")
+metadata/_edit_vertical_guides_ = [784.0]
 
 [node name="border" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.054902)
@@ -123,7 +132,28 @@ remote_path = NodePath("../../Puck")
 update_rotation = false
 update_scale = false
 
-[node name="Player" parent="." instance=ExtResource("3_5j7ts")]
+[node name="PlayerComputer" parent="." instance=ExtResource("6_o7pjn")]
+unique_name_in_owner = true
+
+[node name="NavigationLink2D" type="NavigationLink2D" parent="."]
+bidirectional = false
+start_location = Vector2(671, 0)
+end_location = Vector2(120, 0)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_7d2g7")
+
+[node name="Marker2D" type="Marker2D" parent="NavigationRegion2D"]
+unique_name_in_owner = true
+position = Vector2(168.299, 292.957)
+
+[node name="Marker2D2" type="Marker2D" parent="NavigationRegion2D"]
+position = Vector2(180, 352)
+
+[node name="Marker2D3" type="Marker2D" parent="NavigationRegion2D"]
+position = Vector2(164, 420)
+
+[node name="Player" parent="." instance=ExtResource("6_h74sl")]
 
 [node name="Puck" type="RigidBody2D" parent="."]
 unique_name_in_owner = true
@@ -149,27 +179,46 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Puck/Area2D"]
 shape = SubResource("CircleShape2D_6jajp")
 
-[node name="golie" type="CharacterBody2D" parent="."]
+[node name="Goalie" type="CharacterBody2D" parent="."]
 collision_layer = 0
 collision_mask = 0
 motion_mode = 1
 platform_on_leave = 2
-script = ExtResource("5_00bjy")
+script = ExtResource("9_lxqlk")
 
-[node name="Sprite2D" type="Sprite2D" parent="golie"]
-texture = ExtResource("5_dj6gi")
+[node name="Sprite2D" type="Sprite2D" parent="Goalie"]
+texture = ExtResource("10_5o8xv")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="golie"]
-constant_linear_velocity = Vector2(200, 0)
+[node name="StaticBody2D" type="StaticBody2D" parent="Goalie"]
+physics_material_override = ExtResource("3_80pb4")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="golie/StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Goalie/StaticBody2D"]
 polygon = PackedVector2Array(1, -21, 5, -18, 5, 19, 3, 19, 0, 23, -19, 23, -19, 21, -23, 18, -23, -18, -19, -21, -19, -23, 1, -23)
 
-[node name="Goal" parent="." instance=ExtResource("8_cqw0d")]
+[node name="GoalieComputer" type="CharacterBody2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+platform_on_leave = 2
+script = ExtResource("11_sbbbx")
 
-[node name="Goal2" parent="." instance=ExtResource("8_cqw0d")]
+[node name="Sprite2D" type="Sprite2D" parent="GoalieComputer"]
+texture = ExtResource("10_5o8xv")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="GoalieComputer"]
+physics_material_override = ExtResource("3_80pb4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GoalieComputer/StaticBody2D"]
+polygon = PackedVector2Array(1, -21, 5, -18, 5, 19, 3, 19, 0, 23, -19, 23, -19, 21, -23, 18, -23, -18, -19, -21, -19, -23, 1, -23)
+
+[node name="Goal" parent="." node_paths=PackedStringArray("score") instance=ExtResource("8_cqw0d")]
+visible = false
+score = NodePath("../CenterContainer/scoreboard/score_left")
+
+[node name="Goal2" parent="." node_paths=PackedStringArray("score") instance=ExtResource("8_cqw0d")]
 position = Vector2(104, 436)
 rotation = 3.14159
+score = NodePath("../CenterContainer/scoreboard/score_right")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 offset_right = 844.0
@@ -222,5 +271,9 @@ pitch_scale = 1.52
 [node name="AudioStart" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("12_o314w")
+
+[node name="AudioEnd" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("17_gls8q")
 
 [connection signal="body_entered" from="Puck" to="Puck" method="_on_body_entered"]

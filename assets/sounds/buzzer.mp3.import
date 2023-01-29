@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/buzzer.mp3-7d0fc468a348c6f6e1ab8c4f1fffd013.m
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
 bpm=0
 beat_count=0

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c17ykim87pvd8"]
+
+[ext_resource type="PackedScene" uid="uid://tvkhr45kwjp0" path="res://player/PlayerBase.tscn" id="1_yru6l"]
+[ext_resource type="Script" path="res://player/PlayerHuman.gd" id="2_204e0"]
+
+[node name="PlayerHuman" instance=ExtResource("1_yru6l")]
+script = ExtResource("2_204e0")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="6"]

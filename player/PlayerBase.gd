@@ -1,4 +1,4 @@
-class_name Player
+class_name PlayerBase
 extends CharacterBody2D
 
 
@@ -45,11 +45,12 @@ func reset():
 	self.rotation_degrees = 0
 	self.velocity = Vector2.ZERO
 	$RemoteTransform2D.remote_path = NodePath("")
-	
+
+var input_y:float = 0.0
+var input_x:float = 0.0
 
 func _physics_process(delta):
-	var input_y = Input.get_action_strength("Player1_down") - Input.get_action_strength("Player1_up")
-	var input_x = Input.get_action_strength("Player1_right") - Input.get_action_strength("Player1_left")
+
 
 	var new_rotation_degrees = 0 
 
@@ -106,51 +107,55 @@ func _physics_process(delta):
 	
 	$AnimationTree.set("parameters/skate_animation_timescale/scale", maxf(6.5*absf(velocity.x)/MAX_SPEED,6.5*absf(velocity.y)/MAX_SPEED))
 	
-	
-	if Input.get_action_strength("Player1_shoot", true) and $RemoteTransform2D.remote_path != NodePath(""):
-		state = States.SHOOT
-		$AnimationTree["parameters/shoot/active"] = true
+
+
+func player_shoot():
+	state = States.SHOOT
+	$AnimationTree["parameters/shoot/active"] = true
 
 #		var puck_velocity = (Vector2(input_y * speed * delta, input_x * speed * delta) * speed * 0.7) # (self.velocity * 4.0 * 0.3) + 
 #		$"../Puck".linear_velocity = puck_velocity
 #		$"../Puck".linear_velocity = Vector2.RIGHT * 8*MAX_SPEED
-		
-		var puck_velocity
-		
-		match self.dir:
-			Direction.EAST:
-				puck_velocity = Vector2(1, 0)
-			Direction.SOUTH_EAST:
-				puck_velocity = Vector2(1, 1)
-			Direction.SOUTH:
-				puck_velocity = Vector2(0, 1)
-			Direction.SOUTH_WEST:
-				puck_velocity = Vector2(-1, 1)
-			Direction.WEST:
-				puck_velocity = Vector2(-1, 0)
-			Direction.NORTH_WEST:
-				puck_velocity = Vector2(-1, -1)
-			Direction.NORTH:
-				puck_velocity = Vector2(0, -1)
-			Direction.NORTH_EAST:
-				puck_velocity = Vector2(1, -1)
-		
-		
-		puck_velocity *= MAX_SPEED*3.0/5.0
-		
+	
+	var puck_velocity
+	
+	match self.dir:
+		Direction.EAST:
+			puck_velocity = Vector2(1, 0)
+		Direction.SOUTH_EAST:
+			puck_velocity = Vector2(1, 1)
+		Direction.SOUTH:
+			puck_velocity = Vector2(0, 1)
+		Direction.SOUTH_WEST:
+			puck_velocity = Vector2(-1, 1)
+		Direction.WEST:
+			puck_velocity = Vector2(-1, 0)
+		Direction.NORTH_WEST:
+			puck_velocity = Vector2(-1, -1)
+		Direction.NORTH:
+			puck_velocity = Vector2(0, -1)
+		Direction.NORTH_EAST:
+			puck_velocity = Vector2(1, -1)
+	
+	
+	puck_velocity *= MAX_SPEED*3.0/5.0
+	
 #		$"../Puck".transform.rotated(self.transform.get_rotation())
 #		$Area2D.monitoring = true
 #		$Area2D.set_deferred("monitoring", true)
 #		$"../Puck".linear_velocity = puck_velocity
-		($%Puck as RigidBody2D).apply_impulse(puck_velocity, Vector2.ZERO)
-		$RemoteTransform2D.remote_path = NodePath("")
-		
-		var timer:SceneTreeTimer = self.get_tree().create_timer(0.1)
-		timer.timeout.connect(func(): 
-			$Area2D.set_deferred("monitoring", true)
-			state = States.SKATE
-			)
+	($%Puck as RigidBody2D).apply_impulse(puck_velocity, Vector2.ZERO)
+	$RemoteTransform2D.remote_path = NodePath("")
+	
+	var timer:SceneTreeTimer = self.get_tree().create_timer(0.1)
+	timer.timeout.connect(func(): 
+		$Area2D.set_deferred("monitoring", true)
+		state = States.SKATE
+		)
 
+func puck_lost():
+	$Area2D.set_deferred("monitoring", true)
+	$RemoteTransform2D.remote_path = NodePath("")
 
 
 func _on_puck_body_entered(body):

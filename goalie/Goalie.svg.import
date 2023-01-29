@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cucdaq688ngrt"
-path="res://.godot/imported/player.svg-6d2d65638c721fdbfc24387a7aa9f5c1.ctex"
+uid="uid://ojvndiwxxnkt"
+path="res://.godot/imported/Goalie.svg-d7166ee305b02cec615485eff66cb96b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player.svg"
-dest_files=["res://.godot/imported/player.svg-6d2d65638c721fdbfc24387a7aa9f5c1.ctex"]
+source_file="res://goalie/Goalie.svg"
+dest_files=["res://.godot/imported/Goalie.svg-d7166ee305b02cec615485eff66cb96b.ctex"]
 
 [params]
 
