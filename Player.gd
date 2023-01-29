@@ -35,6 +35,7 @@ func _ready():
 func start():
 	$AnimationTree.active = false
 	self.set_physics_process(true)
+	$Area2D.set_deferred("monitoring", true)
 	
 func reset():
 	$AnimationTree.active = false
@@ -47,8 +48,8 @@ func reset():
 	
 
 func _physics_process(delta):
-	var input_y = Input.get_action_strength("player1_down") - Input.get_action_strength("player1_up")
-	var input_x = Input.get_action_strength("player1_right") - Input.get_action_strength("player1_left")
+	var input_y = Input.get_action_strength("Player1_down") - Input.get_action_strength("Player1_up")
+	var input_x = Input.get_action_strength("Player1_right") - Input.get_action_strength("Player1_left")
 
 	var new_rotation_degrees = 0 
 
@@ -86,6 +87,19 @@ func _physics_process(delta):
 	velocity.x += input_x * speed * delta
 
 	self.move_and_slide()
+#
+#	for i in get_slide_collision_count():
+#		var collision = get_slide_collision(i)
+#		if "collider" in collision:
+#			printt("Collided with: ", collision.collider.name)
+#
+#
+	var collision:KinematicCollision2D = self.get_last_slide_collision()
+	if collision != null:
+#		printt("collision", collision.get_normal())
+#		printt("player velocity", self.velocity)
+		self.velocity += (collision.get_normal()*collision.get_depth()*14000.0)
+		
 	
 	velocity.y = clamp(velocity.y, -MAX_SPEED, MAX_SPEED)
 	velocity.x = clamp(velocity.x, -MAX_SPEED, MAX_SPEED)
@@ -93,13 +107,13 @@ func _physics_process(delta):
 	$AnimationTree.set("parameters/skate_animation_timescale/scale", maxf(6.5*absf(velocity.x)/MAX_SPEED,6.5*absf(velocity.y)/MAX_SPEED))
 	
 	
-	if Input.get_action_strength("player1_shoot", true) and $RemoteTransform2D.remote_path != NodePath(""):
+	if Input.get_action_strength("Player1_shoot", true) and $RemoteTransform2D.remote_path != NodePath(""):
 		state = States.SHOOT
 		$AnimationTree["parameters/shoot/active"] = true
 
 #		var puck_velocity = (Vector2(input_y * speed * delta, input_x * speed * delta) * speed * 0.7) # (self.velocity * 4.0 * 0.3) + 
-#		$"../puck".linear_velocity = puck_velocity
-#		$"../puck".linear_velocity = Vector2.RIGHT * 8*MAX_SPEED
+#		$"../Puck".linear_velocity = puck_velocity
+#		$"../Puck".linear_velocity = Vector2.RIGHT * 8*MAX_SPEED
 		
 		var puck_velocity
 		
@@ -122,20 +136,30 @@ func _physics_process(delta):
 				puck_velocity = Vector2(1, -1)
 		
 		
-		puck_velocity *= 3.2*MAX_SPEED
+		puck_velocity *= MAX_SPEED*3.0/5.0
 		
-#		$"../puck".transform.rotated(self.transform.get_rotation())
-		$"../puck".linear_velocity = puck_velocity
+#		$"../Puck".transform.rotated(self.transform.get_rotation())
+#		$Area2D.monitoring = true
+#		$Area2D.set_deferred("monitoring", true)
+#		$"../Puck".linear_velocity = puck_velocity
+		($%Puck as RigidBody2D).apply_impulse(puck_velocity, Vector2.ZERO)
 		$RemoteTransform2D.remote_path = NodePath("")
+		
+		var timer:SceneTreeTimer = self.get_tree().create_timer(0.1)
+		timer.timeout.connect(func(): 
+			$Area2D.set_deferred("monitoring", true)
+			state = States.SKATE
+			)
 
 
 
 func _on_puck_body_entered(body):
-	printt("Pick-up puck:", body)
+	printt("Pick-up puck?:", body)
 
 func _on_area_2d_area_entered(area):
-	$RemoteTransform2D.remote_path = ^"../../puck"
-	$"../puck".linear_velocity = Vector2.ZERO
-	printt("Pick-up puck:", area)
+	$RemoteTransform2D.remote_path = ^"../../Puck"
+	$Area2D.set_deferred("monitoring", false) # https://godotengine.org/qa/63620/cant-set-area2d-scene-monitorable-property-false-via-script
+	$%Puck.on_pickup(self)
+	printt("Pick-up puck:", self, area)
 
 

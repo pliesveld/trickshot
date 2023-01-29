@@ -24,7 +24,7 @@ func reset():
 	set_physics_process(false)
 
 func _physics_process(delta):
-		var input_y = Input.get_action_strength("player1_down") - Input.get_action_strength("player1_up")
+		var input_y = Input.get_action_strength("Player1_down") - Input.get_action_strength("Player1_up")
 		velocity.y += input_y * speed * delta
 		
 		self.move_and_collide(velocity)

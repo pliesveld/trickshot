@@ -12,11 +12,11 @@ func start():
 	
 func reset():
 	self.visible = true
-	$"../puck".global_transform.origin = self.global_transform.origin
-	$RemoteTransform2D.remote_path = ^"../../puck"
+	$"../Puck".global_transform.origin = self.global_transform.origin
+	$RemoteTransform2D.remote_path = ^"../../Puck"
 	
 func drop_puck():
 	$RemoteTransform2D.remote_path = NodePath("")
 	self.visible = false
-	$"../puck".global_transform.origin = self.global_transform.origin
-	$"../puck".linear_velocity = Vector2(0.0, randi_range(-1,1)*randf_range(150.0, 350.0))
+	$"../Puck".global_transform.origin = self.global_transform.origin
+	$"../Puck".linear_velocity = Vector2(0.0, randi_range(-1,1)*randf_range(150.0, 350.0))

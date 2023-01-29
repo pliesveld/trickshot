@@ -1,17 +1,19 @@
-[gd_scene load_steps=20 format=3 uid="uid://brh0q3ga85c1x"]
+[gd_scene load_steps=22 format=3 uid="uid://brh0q3ga85c1x"]
 
 [ext_resource type="Texture2D" uid="uid://bw5of24w3c1wf" path="res://hattrick.jpg" id="1_ej1rx"]
 [ext_resource type="Script" path="res://game.gd" id="1_pknp7"]
 [ext_resource type="PackedScene" uid="uid://cxlrlby78c6s3" path="res://Player.tscn" id="3_5j7ts"]
+[ext_resource type="PhysicsMaterial" uid="uid://cc7pf7rspeetf" path="res://wall_physics.tres" id="3_80pb4"]
 [ext_resource type="Script" path="res://golie.gd" id="5_00bjy"]
 [ext_resource type="Texture2D" uid="uid://2wju4f7voc02" path="res://golie.png" id="5_dj6gi"]
-[ext_resource type="PackedScene" path="res://Goal.tscn" id="8_cqw0d"]
+[ext_resource type="Script" path="res://Puck.gd" id="6_0ejv0"]
+[ext_resource type="PackedScene" uid="uid://cfvalxvhuk5ge" path="res://Goal.tscn" id="8_cqw0d"]
 [ext_resource type="FontFile" uid="uid://dgvxek8eky7w6" path="res://assets/fonts/scoreboard.ttf" id="9_u7r14"]
 [ext_resource type="AudioStream" uid="uid://deus8ewb54app" path="res://assets/sounds/horn.mp3" id="10_3wuvb"]
-[ext_resource type="Texture2D" path="res://assets/images/referee.jpg" id="10_56k1v"]
+[ext_resource type="Texture2D" uid="uid://daf3sejlkgtpc" path="res://assets/images/referee.jpg" id="10_56k1v"]
 [ext_resource type="Script" path="res://score.gd" id="10_qh5ap"]
 [ext_resource type="Script" path="res://Referee.gd" id="11_bttac"]
-[ext_resource type="AudioStream" path="res://assets/sounds/whistle.wav" id="12_o314w"]
+[ext_resource type="AudioStream" uid="uid://ohvl3iwfd3qn" path="res://assets/sounds/whistle.wav" id="12_o314w"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1mjv7"]
 distance = 0.000916037
@@ -42,7 +44,7 @@ script = ExtResource("1_pknp7")
 
 [node name="border" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.054902)
-position = Vector2(421.061, 323.75)
+position = Vector2(420, 324)
 scale = Vector2(3.28173, 3.28173)
 texture = ExtResource("1_ej1rx")
 
@@ -50,7 +52,7 @@ texture = ExtResource("1_ej1rx")
 rotation = 3.14159
 collision_layer = 3
 collision_mask = 3
-constant_linear_velocity = Vector2(0, 180)
+physics_material_override = ExtResource("3_80pb4")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="border/wall_top"]
 position = Vector2(0.0185852, -20.797)
@@ -59,7 +61,7 @@ polygon = PackedVector2Array(-128.895, 36.8708, -109.394, 36.8708, -109.394, 84.
 [node name="wall_bottom" type="StaticBody2D" parent="border"]
 collision_layer = 3
 collision_mask = 3
-constant_linear_velocity = Vector2(0, -180)
+physics_material_override = ExtResource("3_80pb4")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="border/wall_bottom"]
 polygon = PackedVector2Array(-128.305, 32.9857, -108.803, 32.9857, -108.803, 84.1783, 108.156, 84.1783, 108.156, 32.9857, 127.658, 32.9857, 127.658, 98.8047, -128.305, 98.8047)
@@ -69,17 +71,23 @@ polygon = PackedVector2Array(-128.305, 32.9857, -108.803, 32.9857, -108.803, 84.
 [node name="StaticBody2D" type="StaticBody2D" parent="border/corners"]
 collision_layer = 3
 collision_mask = 3
-constant_linear_velocity = Vector2(50, 50)
+physics_material_override = ExtResource("3_80pb4")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="border/corners/StaticBody2D"]
 position = Vector2(-99.0517, -59.6484)
-polygon = PackedVector2Array(28.034, -18.283, 28.034, -3.65661, 13.4076, -1.21887, 7.31321, 2.43774, -7.62939e-06, 8.53209, -4.87549, 15.8453, -9.75096, 28.034, -29.2529, 25.5963, -29.2529, -18.283)
+polygon = PackedVector2Array(28.034, -18.283, 28.034, -3.65661, 17.3874, -3.7328, -2.11446, 2.36154, -9.75098, 24.3774, -29.2529, 24.3774, -29.2529, -18.283)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="border/corners/StaticBody2D"]
+position = Vector2(106.042, -54.8491)
+rotation = 1.5708
+polygon = PackedVector2Array(28.034, -18.283, 28.034, -3.65661, 17.3874, -3.7328, -2.11446, 2.36154, -9.75098, 24.3774, -29.2529, 24.3774, -29.2529, -18.283)
 
 [node name="boundary" type="StaticBody2D" parent="border"]
 position = Vector2(95.9674, -16.0738)
 scale = Vector2(0.304717, 0.304717)
 collision_layer = 3
 collision_mask = 3
+physics_material_override = ExtResource("3_80pb4")
 
 [node name="left" type="CollisionShape2D" parent="border/boundary"]
 position = Vector2(-736, 77)
@@ -111,31 +119,34 @@ script = ExtResource("11_bttac")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Referee"]
 position = Vector2(-0.00012207, 137.143)
-remote_path = NodePath("../../puck")
+remote_path = NodePath("../../Puck")
 update_rotation = false
 update_scale = false
 
 [node name="Player" parent="." instance=ExtResource("3_5j7ts")]
-position = Vector2(13, 0)
 
-[node name="puck" type="RigidBody2D" parent="."]
+[node name="Puck" type="RigidBody2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(420, 184)
 mass = 0.17
+max_contacts_reported = 1
+contact_monitor = true
 linear_damp = 1.2
+script = ExtResource("6_0ejv0")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="puck"]
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Puck"]
 scale = Vector2(8, 7.991)
 mesh = SubResource("SphereMesh_vmp14")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="puck"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Puck"]
 shape = SubResource("CircleShape2D_2jtym")
 
-[node name="Area2D" type="Area2D" parent="puck"]
+[node name="Area2D" type="Area2D" parent="Puck"]
 collision_layer = 3
 collision_mask = 3
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="puck/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Puck/Area2D"]
 shape = SubResource("CircleShape2D_6jajp")
 
 [node name="golie" type="CharacterBody2D" parent="."]
@@ -211,3 +222,5 @@ pitch_scale = 1.52
 [node name="AudioStart" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("12_o314w")
+
+[connection signal="body_entered" from="Puck" to="Puck" method="_on_body_entered"]

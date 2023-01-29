@@ -287,12 +287,13 @@ atlas = SubResource("CompressedTexture2D_40krj")
 region = Rect2(0, 216, 216, 216)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pu26h"]
-radius = 30.0
+radius = 18.0
 
 [node name="PlayerSkeleton" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 2
 motion_mode = 1
+platform_on_leave = 2
 script = ExtResource("1_j6brk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -301,7 +302,7 @@ libraries = {
 }
 next/RESET = &"skate"
 next/shoot = &"skate"
-blend_times = [&"shoot", &"shoot", 1.0, &"shoot", &"skate", 2.0]
+blend_times = [&"shoot", &"skate", 2.0, &"shoot", &"shoot", 1.0]
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_etifq")
@@ -422,10 +423,6 @@ scale = Vector2(0.3, 0.3)
 texture = SubResource("AtlasTexture_4wx6d")
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(16, -7)
-shape = SubResource("CircleShape2D_pu26h")
-
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 position = Vector2(45, -31)
 update_rotation = false
@@ -437,5 +434,9 @@ monitorable = false
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 position = Vector2(-3, 8)
 polygon = PackedVector2Array(51, -34, 34, 11, 4, 12, -4, 8, -8, -8, -10, -19, 27, -51)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, -2)
+shape = SubResource("CircleShape2D_pu26h")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
