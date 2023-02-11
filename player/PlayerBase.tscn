@@ -301,7 +301,7 @@ libraries = {
 "": SubResource("AnimationLibrary_7j4xk")
 }
 next/RESET = &"skate"
-blend_times = [&"shoot", &"shoot", 1.0, &"shoot", &"skate", 2.0]
+blend_times = [&"shoot", &"skate", 2.0, &"shoot", &"shoot", 1.0]
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_etifq")

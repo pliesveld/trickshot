@@ -6,6 +6,9 @@
 [node name="PlayerComputer" instance=ExtResource("1_bp56i")]
 script = ExtResource("2_wyhac")
 
+[node name="ArmLowerLeftBone2D" parent="Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D" index="1"]
+scale = Vector2(0.999999, 0.999999)
+
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="6"]
 target_desired_distance = 20.0
 avoidance_enabled = true

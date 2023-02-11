@@ -6,4 +6,7 @@
 [node name="PlayerHuman" instance=ExtResource("1_yru6l")]
 script = ExtResource("2_204e0")
 
+[node name="ArmLowerLeftBone2D" parent="Sprite2D/Skeleton2D/BodyBone2D/ArmUpperLeftBone2D" index="1"]
+scale = Vector2(0.999999, 0.999999)
+
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="6"]

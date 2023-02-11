@@ -52,7 +52,7 @@ var input_x:float = 0.0
 func _physics_process(delta):
 
 
-	var new_rotation_degrees = 0 
+	var new_rotation_degrees = self.rotation_degrees 
 
 	if abs(input_y) > abs(input_x):
 		if input_y > 0.0:

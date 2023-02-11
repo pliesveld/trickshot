@@ -15,10 +15,15 @@ func reset():
 	self.get_tree().call_group("entities", "reset")
 	$Puck.linear_velocity = Vector2.ZERO
 	$Puck.global_transform.origin = Vector2(400, 400)
-	$Player.global_transform.origin = Vector2(200, 400)
-	$%PlayerComputer.global_transform.origin = Vector2(600, 400)
-	$Goalie.global_transform.origin = Vector2(70, 400)
-	$GoalieComputer.global_transform.origin = Vector2(784, 400)
+	$Player1.global_transform.origin = Vector2(304, 400)
+	$Player2.global_transform.origin = Vector2(540, 400)
+
+#	$%PlayerComputer.global_transform.origin = Vector2(600, 400)
+
+	$Goalie/Player1.global_transform.origin = Vector2(70, 400)
+	$Goalie/Player2.global_transform.origin = Vector2(754, 400)
+	
+#	$GoalieComputer.global_transform.origin = Vector2(784, 400)
 	$Referee.global_transform.origin = Vector2(420, 152)
 	$Timer.stop()
 	($%AudioEnd as AudioStreamPlayer).stop()
@@ -36,8 +41,8 @@ func start():
 
 func end():
 	$%Timer.stop()
-	$Player.set_physics_process(false)
-	$%PlayerComputer.set_physics_process(false)
+	self.get_tree().get_nodes_in_group("players").map(func(e): e.set_physics_process(false))
+#	self.get_tree().call_group("players","set_physics_process", false)
 	$%Puck.set_physics_process(false)
 	($%AudioEnd as AudioStreamPlayer).play()
 
