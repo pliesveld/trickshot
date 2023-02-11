@@ -1,0 +1,7 @@
+[gd_resource type="FastNoiseLite" format=3 uid="uid://db0mviihwcktv"]
+
+[resource]
+seed = 24144
+frequency = 0.001
+offset = Vector3(2000, 0, 0)
+fractal_type = 2

@@ -29,9 +29,9 @@ distance = 160.527
 blend_mode = 2
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_7d2g7"]
-vertices = PackedVector2Array(120, 128, 732, 128, 752, 584, 120, 592)
+vertices = PackedVector2Array(120, 128, 744, 136, 756, 596, 80, 584)
 polygons = [PackedInt32Array(0, 1, 2, 3)]
-outlines = [PackedVector2Array(120, 128, 732, 128, 752, 584, 120, 592)]
+outlines = [PackedVector2Array(120, 128, 744, 136, 756, 596, 80, 584)]
 
 [sub_resource type="SphereMesh" id="SphereMesh_vmp14"]
 

@@ -41,9 +41,12 @@ func update_target():
 
 var total:float = 0.0
 
+var noise = preload("res://player/PlayerComputerRotationNoise.tres")
+
 func _physics_process(delta):
-	input_y = randf_range(-1.0,1.0)
-	input_x = randf_range(-1.0,1.0)
+	input_x = noise.get_noise_1d(self.position.x)
+	input_y = noise.get_noise_1d(self.position.y)
+	
 
 	total += delta
 	if total > 1.0:
