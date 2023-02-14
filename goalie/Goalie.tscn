@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3ydxosvrxea5"]
+
+[ext_resource type="Script" path="res://goalie/Goalie.gd" id="1_ebyuw"]
+[ext_resource type="Texture2D" uid="uid://2wju4f7voc02" path="res://goalie/Goalie.png" id="2_x6wbf"]
+[ext_resource type="PhysicsMaterial" uid="uid://cc7pf7rspeetf" path="res://wall_physics.tres" id="3_5rmup"]
+
+[node name="Goalie1" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+platform_on_leave = 2
+script = ExtResource("1_ebyuw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_x6wbf")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = ExtResource("3_5rmup")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1, -21, 5, -18, 5, 19, 3, 19, 0, 23, -19, 23, -19, 21, -23, 18, -23, -18, -19, -21, -19, -23, 1, -23)
